@@ -40,6 +40,8 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
             "svelte.config.js", 
         ]);
         if (!svelteConfig) return {
+            css: false,
+            dev: options.mode !== "production"
         };
         if (svelteConfig.filePath.endsWith(".js")) {
             // TODO: Is there a better way of handling this warning? Probably just
@@ -95,8 +97,7 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
             hotOptions: hmrOptions,
             compiled: compiled,
             originalCode: source,
-            compileOptions: compilerOptions || {
-            }
+            compileOptions: compilerOptions
         });
         // Create the new assets from the compilation result.
         const assets = [
