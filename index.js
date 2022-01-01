@@ -22,8 +22,10 @@ export default new Transformer({
     ]);
     if (!svelteConfig)
       return {
-        css: false,
-        dev: options.mode !== "production",
+        compilerOptions: {
+          css: false,
+          dev: options.mode !== "production",
+        },
       };
     if (svelteConfig.filePath.endsWith(".js")) {
       // TODO: Is there a better way of handling this warning? Probably just
