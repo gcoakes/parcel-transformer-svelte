@@ -91,7 +91,7 @@ export default new Transformer({
         hotOptions: hmrOptions,
         compiled,
         originalCode: source,
-        compileOptions: compilerOptions,
+        compileOptions: compilerOptions || {},
       });
     }
 

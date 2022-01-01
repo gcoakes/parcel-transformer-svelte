@@ -90,12 +90,13 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
             })
         , source);
         if (options.hmrOptions) compiled.js.code = $fe9c67c6604b403f$var$makeHot({
-            id: asset.id,
+            id: filename,
             compiledCode: compiled.js.code,
             hotOptions: hmrOptions,
             compiled: compiled,
             originalCode: source,
-            compileOptions: compilerOptions
+            compileOptions: compilerOptions || {
+            }
         });
         // Create the new assets from the compilation result.
         const assets = [
