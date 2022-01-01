@@ -39,9 +39,10 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
             ".svelterc.json",
             "svelte.config.js", 
         ]);
+        const css = !!options.hmrOptions;
         if (!svelteConfig) return {
             compilerOptions: {
-                css: false,
+                css: css,
                 dev: options.mode !== "production"
             }
         };
@@ -56,7 +57,7 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
         return {
             ...svelteConfig.contents,
             compilerOptions: {
-                css: false,
+                css: css,
                 ...svelteConfig.contents.compilerOptions,
                 dev: options.mode !== "production"
             }

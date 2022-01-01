@@ -26,9 +26,10 @@ var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
             ".svelterc.json",
             "svelte.config.js", 
         ]);
+        const css = !!options.hmrOptions;
         if (!svelteConfig) return {
             compilerOptions: {
-                css: false,
+                css: css,
                 dev: options.mode !== "production"
             }
         };
@@ -43,7 +44,7 @@ var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
         return {
             ...svelteConfig.contents,
             compilerOptions: {
-                css: false,
+                css: css,
                 ...svelteConfig.contents.compilerOptions,
                 dev: options.mode !== "production"
             }

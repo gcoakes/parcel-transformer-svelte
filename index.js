@@ -20,10 +20,11 @@ export default new Transformer({
       ".svelterc.json",
       "svelte.config.js",
     ]);
+    const css = !!options.hmrOptions;
     if (!svelteConfig)
       return {
         compilerOptions: {
-          css: false,
+          css,
           dev: options.mode !== "production",
         },
       };
@@ -41,7 +42,7 @@ export default new Transformer({
     return {
       ...svelteConfig.contents,
       compilerOptions: {
-        css: false,
+        css,
         ...svelteConfig.contents.compilerOptions,
         dev: options.mode !== "production",
       },
