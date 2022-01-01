@@ -1,9 +1,12 @@
 import { Transformer } from "@parcel/plugin";
 import SourceMap from "@parcel/source-map";
 import { relativeUrl } from "@parcel/utils";
-import { compile, preprocess } from "svelte/compiler";
+import { compile, preprocess, walk } from "svelte/compiler";
 import ThrowableDiagnostic from "@parcel/diagnostic";
 import preprocessor from "svelte-preprocess";
+import { createMakeHot } from "svelte-hmr";
+
+const makeHot = createMakeHot({ walk });
 
 export default new Transformer({
   async loadConfig({ config, options, logger }) {
@@ -35,6 +38,7 @@ export default new Transformer({
   },
 
   async transform({
+    id,
     asset,
     config: { preprocess: preprocessConf, compilerOptions },
     options,
@@ -75,6 +79,17 @@ export default new Transformer({
         }),
       source,
     );
+
+    if (options.hmrOptions) {
+      compiled.js.code = makeHot({
+        id,
+        compiledCode: compiled.js.code,
+        hotOptions: config.hmrOptions,
+        compiled,
+        originalCode: source,
+        compileOptions: compilerOptions,
+      });
+    }
 
     // Create the new assets from the compilation result.
     const assets = [
