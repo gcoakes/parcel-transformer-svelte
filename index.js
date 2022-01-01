@@ -6,7 +6,12 @@ import ThrowableDiagnostic from "@parcel/diagnostic";
 import preprocessor from "svelte-preprocess";
 import { createMakeHot } from "svelte-hmr";
 
-const makeHot = createMakeHot({ walk });
+const makeHot = createMakeHot({
+  walk,
+  meta: "module",
+  absoluteImports: false,
+  versionNonAbsoluteImports: false,
+});
 
 export default new Transformer({
   async loadConfig({ config, options, logger }) {
@@ -40,7 +45,7 @@ export default new Transformer({
   async transform({
     id,
     asset,
-    config: { preprocess: preprocessConf, compilerOptions },
+    config: { preprocess: preprocessConf, compilerOptions, hmrOptions },
     options,
     logger,
   }) {
@@ -84,7 +89,7 @@ export default new Transformer({
       compiled.js.code = makeHot({
         id,
         compiledCode: compiled.js.code,
-        hotOptions: config.hmrOptions,
+        hotOptions: hmrOptions,
         compiled,
         originalCode: source,
         compileOptions: compilerOptions,

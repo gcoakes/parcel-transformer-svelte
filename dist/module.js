@@ -1,9 +1,10 @@
 import {Transformer as $h3sTQ$Transformer} from "@parcel/plugin";
 import $h3sTQ$parcelsourcemap from "@parcel/source-map";
 import {relativeUrl as $h3sTQ$relativeUrl} from "@parcel/utils";
-import {preprocess as $h3sTQ$preprocess, compile as $h3sTQ$compile} from "svelte/compiler";
+import {walk as $h3sTQ$walk, preprocess as $h3sTQ$preprocess, compile as $h3sTQ$compile} from "svelte/compiler";
 import $h3sTQ$parceldiagnostic from "@parcel/diagnostic";
 import $h3sTQ$sveltepreprocess from "svelte-preprocess";
+import {createMakeHot as $h3sTQ$createMakeHot} from "svelte-hmr";
 
 
 
@@ -11,6 +12,13 @@ import $h3sTQ$sveltepreprocess from "svelte-preprocess";
 
 
 
+
+const $865fd9cd10eb2e95$var$makeHot = $h3sTQ$createMakeHot({
+    walk: $h3sTQ$walk,
+    meta: "module",
+    absoluteImports: false,
+    versionNonAbsoluteImports: false
+});
 var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
     async loadConfig ({ config: config , options: options , logger: logger  }) {
         const svelteConfig = await config.getConfig([
@@ -37,7 +45,7 @@ var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
             }
         };
     },
-    async transform ({ asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions  } , options: options , logger: logger ,  }) {
+    async transform ({ id: id , asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions , hmrOptions: hmrOptions  } , options: options , logger: logger ,  }) {
         let source = await asset.getCode();
         const filename = $h3sTQ$relativeUrl(options.projectRoot, asset.filePath);
         // If the preprocessor config is never defined in the svelte config, attempt
@@ -68,6 +76,14 @@ var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
                 filename: filename
             })
         , source);
+        if (options.hmrOptions) compiled.js.code = $865fd9cd10eb2e95$var$makeHot({
+            id: id,
+            compiledCode: compiled.js.code,
+            hotOptions: hmrOptions,
+            compiled: compiled,
+            originalCode: source,
+            compileOptions: compilerOptions
+        });
         // Create the new assets from the compilation result.
         const assets = [
             {

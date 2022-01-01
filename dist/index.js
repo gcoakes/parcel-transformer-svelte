@@ -4,6 +4,7 @@ var $0lj1i$parcelutils = require("@parcel/utils");
 var $0lj1i$sveltecompiler = require("svelte/compiler");
 var $0lj1i$parceldiagnostic = require("@parcel/diagnostic");
 var $0lj1i$sveltepreprocess = require("svelte-preprocess");
+var $0lj1i$sveltehmr = require("svelte-hmr");
 
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
@@ -24,6 +25,13 @@ $parcel$export(module.exports, "default", () => $fe9c67c6604b403f$export$2e2bcd8
 
 
 
+
+const $fe9c67c6604b403f$var$makeHot = $0lj1i$sveltehmr.createMakeHot({
+    walk: $0lj1i$sveltecompiler.walk,
+    meta: "module",
+    absoluteImports: false,
+    versionNonAbsoluteImports: false
+});
 var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transformer({
     async loadConfig ({ config: config , options: options , logger: logger  }) {
         const svelteConfig = await config.getConfig([
@@ -50,7 +58,7 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
             }
         };
     },
-    async transform ({ asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions  } , options: options , logger: logger ,  }) {
+    async transform ({ id: id , asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions , hmrOptions: hmrOptions  } , options: options , logger: logger ,  }) {
         let source = await asset.getCode();
         const filename = $0lj1i$parcelutils.relativeUrl(options.projectRoot, asset.filePath);
         // If the preprocessor config is never defined in the svelte config, attempt
@@ -81,6 +89,14 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
                 filename: filename
             })
         , source);
+        if (options.hmrOptions) compiled.js.code = $fe9c67c6604b403f$var$makeHot({
+            id: id,
+            compiledCode: compiled.js.code,
+            hotOptions: hmrOptions,
+            compiled: compiled,
+            originalCode: source,
+            compileOptions: compilerOptions
+        });
         // Create the new assets from the compilation result.
         const assets = [
             {
