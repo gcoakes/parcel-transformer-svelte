@@ -45,7 +45,7 @@ var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
             }
         };
     },
-    async transform ({ id: id , asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions , hmrOptions: hmrOptions  } , options: options , logger: logger ,  }) {
+    async transform ({ asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions , hmrOptions: hmrOptions  } , options: options , logger: logger ,  }) {
         let source = await asset.getCode();
         const filename = $h3sTQ$relativeUrl(options.projectRoot, asset.filePath);
         // If the preprocessor config is never defined in the svelte config, attempt
@@ -77,7 +77,7 @@ var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
             })
         , source);
         if (options.hmrOptions) compiled.js.code = $865fd9cd10eb2e95$var$makeHot({
-            id: id,
+            id: asset.id,
             compiledCode: compiled.js.code,
             hotOptions: hmrOptions,
             compiled: compiled,

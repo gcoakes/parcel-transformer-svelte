@@ -43,7 +43,6 @@ export default new Transformer({
   },
 
   async transform({
-    id,
     asset,
     config: { preprocess: preprocessConf, compilerOptions, hmrOptions },
     options,
@@ -87,7 +86,7 @@ export default new Transformer({
 
     if (options.hmrOptions) {
       compiled.js.code = makeHot({
-        id,
+        id: filename,
         compiledCode: compiled.js.code,
         hotOptions: hmrOptions,
         compiled,

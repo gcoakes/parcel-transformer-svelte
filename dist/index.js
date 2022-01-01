@@ -58,7 +58,7 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
             }
         };
     },
-    async transform ({ id: id , asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions , hmrOptions: hmrOptions  } , options: options , logger: logger ,  }) {
+    async transform ({ asset: asset , config: { preprocess: preprocessConf , compilerOptions: compilerOptions , hmrOptions: hmrOptions  } , options: options , logger: logger ,  }) {
         let source = await asset.getCode();
         const filename = $0lj1i$parcelutils.relativeUrl(options.projectRoot, asset.filePath);
         // If the preprocessor config is never defined in the svelte config, attempt
@@ -90,7 +90,7 @@ var $fe9c67c6604b403f$export$2e2bcd8739ae039 = new $0lj1i$parcelplugin.Transform
             })
         , source);
         if (options.hmrOptions) compiled.js.code = $fe9c67c6604b403f$var$makeHot({
-            id: id,
+            id: asset.id,
             compiledCode: compiled.js.code,
             hotOptions: hmrOptions,
             compiled: compiled,
