@@ -20,7 +20,11 @@ export default new Transformer({
       ".svelterc.json",
       "svelte.config.js",
     ]);
-    if (!svelteConfig) return {};
+    if (!svelteConfig)
+      return {
+        css: false,
+        dev: options.mode !== "production",
+      };
     if (svelteConfig.filePath.endsWith(".js")) {
       // TODO: Is there a better way of handling this warning? Probably just
       // mention it in the documentation and silently invalidate.
@@ -91,7 +95,7 @@ export default new Transformer({
         hotOptions: hmrOptions,
         compiled,
         originalCode: source,
-        compileOptions: compilerOptions || {},
+        compileOptions: compilerOptions,
       });
     }
 
