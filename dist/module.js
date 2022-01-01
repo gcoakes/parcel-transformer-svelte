@@ -27,8 +27,10 @@ var $865fd9cd10eb2e95$export$2e2bcd8739ae039 = new $h3sTQ$Transformer({
             "svelte.config.js", 
         ]);
         if (!svelteConfig) return {
-            css: false,
-            dev: options.mode !== "production"
+            compilerOptions: {
+                css: false,
+                dev: options.mode !== "production"
+            }
         };
         if (svelteConfig.filePath.endsWith(".js")) {
             // TODO: Is there a better way of handling this warning? Probably just
